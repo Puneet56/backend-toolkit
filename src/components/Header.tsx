@@ -38,6 +38,12 @@ export function Header() {
 						>
 							User Agent Parser
 						</Link>
+						<Link
+							to="/diff-checker"
+							className="text-sm font-medium transition-colors hover:text-primary"
+						>
+							Diff Checker
+						</Link>
 					</nav>
 					<div className="flex items-center gap-2 border-l pl-4">
 						<ThemeToggle />
