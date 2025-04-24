@@ -12,8 +12,14 @@ import { DiffCheckerPage } from "./pages/DiffCheckerPage";
 function App() {
 	return (
 		<div className="">
+			<a
+				href="#main-content"
+				className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-background focus:px-4 focus:py-2 focus:border focus:rounded-md"
+			>
+				Skip to main content
+			</a>
 			<Header />
-			<main className="p-8 mb-24">
+			<main id="main-content" className="p-8 mb-24">
 				<Routes>
 					<Route path="/" element={<HomePage />} />
 					<Route path="/json-prettifier" element={<JsonPrettifierPage />} />
