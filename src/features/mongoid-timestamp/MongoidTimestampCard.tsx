@@ -32,11 +32,15 @@ export function MongoidTimestampCard() {
 	const [mongoid, setMongoid] = useState<string>(() =>
 		generateMongoIdFromTimestamp(new Date()),
 	);
+	const [timestamp, setTimestamp] = useState<string>(() =>
+		new Date().toISOString()
+	);
 
 	const generateNewId = useCallback(() => {
 		const now = new Date();
 		const newMongoId = generateMongoIdFromTimestamp(now);
 		setMongoid(newMongoId);
+		setTimestamp(now.toISOString());
 	}, []);
 
 	useEffect(() => {
@@ -45,6 +49,21 @@ export function MongoidTimestampCard() {
 
 	const handleMongoidChange = (value: string) => {
 		setMongoid(value);
+		if (value.length === 24) {
+			setTimestamp(generateTimestampFromMongoId(value).toISOString());
+		}
+	};
+
+	const handleTimestampChange = (value: string) => {
+		setTimestamp(value);
+		try {
+			const date = new Date(value);
+			if (!isNaN(date.getTime())) {
+				setMongoid(generateMongoIdFromTimestamp(date));
+			}
+		} catch (error) {
+			// Invalid date, ignore
+		}
 	};
 
 	return (
@@ -69,14 +88,12 @@ export function MongoidTimestampCard() {
 					<Label htmlFor="timestamp">Timestamp</Label>
 					<div className="flex gap-2">
 						<Input
-							value={generateTimestampFromMongoId(mongoid).toISOString()}
-							readOnly
-							placeholder="Timestamp will appear here"
+							value={timestamp}
+							onChange={(e) => handleTimestampChange(e.target.value)}
+							placeholder="Enter ISO timestamp"
 							className="font-mono text-lg"
 						/>
-						<CopyButton
-							value={generateTimestampFromMongoId(mongoid).toISOString()}
-						/>
+						<CopyButton value={timestamp} />
 					</div>
 				</div>
 			</CardContent>
