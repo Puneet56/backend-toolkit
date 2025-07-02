@@ -44,6 +44,12 @@ export function Header() {
 						>
 							Diff Checker
 						</Link>
+						<Link
+							to="/file-structure"
+							className="text-sm font-medium transition-colors hover:text-primary"
+						>
+							File Structure
+						</Link>
 					</nav>
 					<div className="flex items-center gap-2 border-l pl-4">
 						<ThemeToggle />

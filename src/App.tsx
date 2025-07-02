@@ -8,6 +8,7 @@ import { JsonPrettifierPage } from "./pages/JsonPrettifierPage";
 import { UrlDecoderPage } from "./pages/UrlDecoderPage";
 import { UserAgentParserPage } from "./pages/UserAgentParserPage";
 import { DiffCheckerPage } from "./pages/DiffCheckerPage";
+import { FileStructurePage } from "./pages/FileStructurePage";
 
 function App() {
 	return (
@@ -26,6 +27,7 @@ function App() {
 					<Route path="/url-decoder" element={<UrlDecoderPage />} />
 					<Route path="/user-agent-parser" element={<UserAgentParserPage />} />
 					<Route path="/diff-checker" element={<DiffCheckerPage />} />
+					<Route path="/file-structure" element={<FileStructurePage />} />
 				</Routes>
 			</main>
 			<Footer />
