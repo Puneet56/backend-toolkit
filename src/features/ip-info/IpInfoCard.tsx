@@ -25,10 +25,7 @@ interface IpInfo {
 	continent: string;
 	continentCode: string;
 	isProxy: boolean;
-	currency: {
-		code: string;
-		name: string;
-	};
+	currencies: string[];
 	language: string;
 	timeZones: string[];
 	tlds: string[];
@@ -83,10 +80,7 @@ export function IpInfoCard({ className }: IpInfoCardProps) {
 			continent: "Unknown",
 			continentCode: "Unknown",
 			isProxy: false,
-			currency: {
-				code: "Unknown",
-				name: "Unknown",
-			},
+			currencies: [],
 			language: "Unknown",
 			timeZones: [],
 			tlds: [],
@@ -180,7 +174,7 @@ export function IpInfoCard({ className }: IpInfoCardProps) {
 								<div className="font-medium">Timezone</div>
 								<div>{data.timeZone}</div>
 								<div className="font-medium">Currency</div>
-								<div>{`${data.currency?.name} (${data.currency?.code})`}</div>
+								<div>{data.currencies?.join(", ")}</div>
 								<div className="font-medium">Language</div>
 								<div>{data.language}</div>
 								<div className="font-medium">Continent</div>
