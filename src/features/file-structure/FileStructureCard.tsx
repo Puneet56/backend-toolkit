@@ -3,8 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 import { generateTree } from "@/lib/tree/generate-tree";
 import { parseInput } from "@/lib/tree/parse-input";
@@ -19,10 +17,6 @@ export function FileStructureCard({ className }: FileStructureCardProps) {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [charset, setCharset] = useState<"ascii" | "utf-8">("utf-8");
-  const [trailingDirSlash, setTrailingDirSlash] = useState(false);
-  const [fullPath, setFullPath] = useState(false);
-  const [rootDot, setRootDot] = useState(true);
 
   const generateTreeOutput = (inputText: string) => {
     try {
@@ -34,10 +28,10 @@ export function FileStructureCard({ className }: FileStructureCardProps) {
 
       const structure = parseInput(inputText);
       const treeOutput = generateTree(structure, {
-        charset,
-        trailingDirSlash,
-        fullPath,
-        rootDot,
+        charset: "utf-8",
+        trailingDirSlash: false,
+        fullPath: false,
+        rootDot: true,
       });
 
       setOutput(treeOutput);
@@ -81,7 +75,7 @@ empty dir`;
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-2 gap-8">
-          <div className="space-y-4">
+          <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label htmlFor="structure-input" className="text-sm font-medium">
                 File Structure Input
@@ -98,6 +92,9 @@ empty dir`;
                 </Button>
               </div>
             </div>
+
+
+
             <Textarea
               id="structure-input"
               placeholder={`Enter your file structure here...
@@ -128,72 +125,6 @@ my-app
                 }
               }}
             />
-
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="charset" className="text-sm font-medium">
-                    Character Set
-                  </Label>
-                  <Select value={charset} onValueChange={(value: "ascii" | "utf-8") => {
-                    setCharset(value);
-                    generateTreeOutput(input);
-                  }}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="utf-8">UTF-8 (Unicode)</SelectItem>
-                      <SelectItem value="ascii">ASCII</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="trailing-slash" className="text-sm font-medium">
-                    Trailing Directory Slash
-                  </Label>
-                  <Switch
-                    id="trailing-slash"
-                    checked={trailingDirSlash}
-                    onCheckedChange={(checked: boolean) => {
-                      setTrailingDirSlash(checked);
-                      generateTreeOutput(input);
-                    }}
-                  />
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="full-path" className="text-sm font-medium">
-                    Show Full Path
-                  </Label>
-                  <Switch
-                    id="full-path"
-                    checked={fullPath}
-                    onCheckedChange={(checked: boolean) => {
-                      setFullPath(checked);
-                      generateTreeOutput(input);
-                    }}
-                  />
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="root-dot" className="text-sm font-medium">
-                    Show Root Dot
-                  </Label>
-                  <Switch
-                    id="root-dot"
-                    checked={rootDot}
-                    onCheckedChange={(checked: boolean) => {
-                      setRootDot(checked);
-                      generateTreeOutput(input);
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
           </div>
 
           <div className="space-y-2">

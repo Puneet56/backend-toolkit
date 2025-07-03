@@ -5,7 +5,7 @@ import { LINE_STRINGS } from './line-strings';
  * Represents all rendering options available
  * when calling `generateTree`
  */
-interface GenerateTreeOptions {
+export interface GenerateTreeOptions {
   /**
    * Which set of characters to use when
    * rendering directory lines
