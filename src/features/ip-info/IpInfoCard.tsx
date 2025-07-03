@@ -180,13 +180,13 @@ export function IpInfoCard({ className }: IpInfoCardProps) {
 								<div className="font-medium">Timezone</div>
 								<div>{data.timeZone}</div>
 								<div className="font-medium">Currency</div>
-								<div>{`${data.currency.name} (${data.currency.code})`}</div>
+								<div>{`${data.currency?.name} (${data.currency?.code})`}</div>
 								<div className="font-medium">Language</div>
 								<div>{data.language}</div>
 								<div className="font-medium">Continent</div>
 								<div>{`${data.continent} (${data.continentCode})`}</div>
 								<div className="font-medium">TLDs</div>
-								<div>{data.tlds.join(", ")}</div>
+								<div>{data.tlds?.join(", ")}</div>
 							</div>
 						</div>
 					</div>
