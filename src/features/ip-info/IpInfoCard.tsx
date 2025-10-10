@@ -156,7 +156,7 @@ export function IpInfoCard({ className }: IpInfoCardProps) {
 							</div>
 							<div className="grid grid-cols-2 gap-2 text-sm pl-7">
 								<div className="font-medium">IP Address</div>
-								<div>{data.ipAddress}</div>
+								<div className="break-all">{data.ipAddress}</div>
 								<div className="font-medium">IP Version</div>
 								<div>IPv{data.ipVersion}</div>
 								<div className="font-medium">Proxy</div>
