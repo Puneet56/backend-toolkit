@@ -15,12 +15,12 @@ import { useCallback, useEffect, useState } from "react";
 
 export function UtcTimeCard() {
 	const [utcTime, setUtcTime] = useState<string>("");
-	const [unixTime, setUnixTime] = useState<string>("");
+	const [utcMillis, setUtcMillis] = useState<string>("");
 	const [error, setError] = useState<string | null>(null);
 
 	const updateFromDate = useCallback((date: Date) => {
 		setUtcTime(date.toISOString());
-		setUnixTime(Math.floor(date.getTime() / 1000).toString());
+		setUtcMillis(date.getTime().toString());
 		setError(null);
 	}, []);
 
@@ -37,26 +37,26 @@ export function UtcTimeCard() {
 		}
 	};
 
-	const handleUnixTimeChange = (value: string) => {
+	const handleUtcMillisChange = (value: string) => {
 		try {
-			const timestamp = Number.parseInt(value, 10);
-			if (Number.isNaN(timestamp)) {
+			const millis = Number.parseInt(value, 10);
+			if (Number.isNaN(millis)) {
 				throw new Error("Invalid number");
 			}
-			const date = new Date(timestamp * 1000);
+			const date = new Date(millis);
 			if (Number.isNaN(date.getTime())) {
-				throw new Error("Invalid timestamp");
+				throw new Error("Invalid milliseconds");
 			}
 			updateFromDate(date);
 		} catch (err) {
-			setError("Invalid Unix timestamp");
-			setUnixTime(value);
+			setError("Invalid UTC milliseconds");
+			setUtcMillis(value);
 		}
 	};
 
 	useEffect(() => {
 		const updateTime = () => {
-			if (!utcTime && !unixTime) {
+			if (!utcTime && !utcMillis) {
 				updateFromDate(new Date());
 			}
 		};
@@ -69,7 +69,7 @@ export function UtcTimeCard() {
 
 		// Cleanup interval on unmount
 		return () => clearInterval(interval);
-	}, [utcTime, unixTime, updateFromDate]);
+	}, [utcTime, utcMillis, updateFromDate]);
 
 	return (
 		<Card className="w-full">
@@ -109,17 +109,17 @@ export function UtcTimeCard() {
 					</div>
 				</div>
 				<div className="space-y-2">
-					<Label htmlFor="unix-time" className="text-sm font-medium">
-						Unix Timestamp
+					<Label htmlFor="utc-millis" className="text-sm font-medium">
+						UTC Millis
 					</Label>
 					<div className="flex gap-2">
 						<Input
-							id="unix-time"
-							value={unixTime}
-							onChange={(e) => handleUnixTimeChange(e.target.value)}
+							id="utc-millis"
+							value={utcMillis}
+							onChange={(e) => handleUtcMillisChange(e.target.value)}
 							className={cn("font-mono text-lg", error && "border-red-500")}
 						/>
-						<CopyButton value={unixTime} tooltipTitle="Copy Unix timestamp" />
+						<CopyButton value={utcMillis} tooltipTitle="Copy UTC milliseconds" />
 					</div>
 				</div>
 				{error && <p className="text-sm text-red-500">{error}</p>}
